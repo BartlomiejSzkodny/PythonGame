@@ -1,0 +1,9 @@
+make acceleration for the player
+
+do the potion selection
+
+attack animation
+
+make hp work
+
+add shop
