@@ -56,7 +56,7 @@ class Level:
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future_tmx = executor.submit(
-                load_pygame, './assets/tileset/map.tmx')
+                load_pygame, '../PythonGame/assets/tileset/map.tmx')
             future_level_gen = executor.submit(LevelGenerationComplete)
 
     # Retrieve the results once both functions have completed
