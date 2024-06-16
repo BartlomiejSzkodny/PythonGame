@@ -140,9 +140,13 @@ class Player(Entity):
         if not self.timers['potion_use'].active:
             self.effects = None
             self.damage = WEAPON_DATA[self.selected_weapon]['damage']
+            self.speed = 300
         else:
             if self.effects == 'damage_up':
                 self.damage = WEAPON_DATA[self.selected_weapon]['damage'] * \
+                    INVENTORY_DATA[self.selected_potion]['value']
+            if self.effects == 'speed_up':
+                self.speed = 300 + \
                     INVENTORY_DATA[self.selected_potion]['value']
             if self.effects == 'speed_up':
                 self.speed = 300 + \
