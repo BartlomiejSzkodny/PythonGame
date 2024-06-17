@@ -140,7 +140,13 @@ class Level:
                     attack_sprite, self.attackable_sprites, False)
                 if colided_sprites:
                     for sprite in colided_sprites:
-                        sprite.health -= self.player.damage
+                        if sprite.monster_name == 'Imp' and self.player.selected_weapon == 'axe':
+                            sprite.health -= self.player.damage*100
+                        if sprite.monster_name == 'Minotaur' and self.player.selected_weapon == 'sai':
+                            sprite.health -= self.player.damage*10
+                        else:
+                            sprite.health -= self.player.damage
+
                         if sprite.health <= 0:
                             sprite.kill()
                             # print(sprite.health)
