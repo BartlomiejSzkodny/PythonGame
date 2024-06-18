@@ -148,6 +148,7 @@ class Level:
 
                         if sprite.health <= 0:
                             sprite.kill()
+                            self.list_of_enemies.remove(sprite)
                             loot = random.choice(
                                 # reward for killing enemy
                                 list(sprite.loot_table.keys()))
@@ -253,6 +254,7 @@ class Level:
             self.CloseDoors = False
 
     def DoorOpener(self):  # this is the function for opening the doors
+        print(self.list_of_enemies)
         if self.list_of_enemies == [] and self.CloseDoors == False:
             for sprite in self.doors:
                 sprite.kill()

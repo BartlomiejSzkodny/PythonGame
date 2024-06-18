@@ -6,11 +6,13 @@ from support import import_folder
 
 class Monster(Entity):
     def __init__(self, monster_name, pos, groups, collision_sprites, attack_func):
+        # initializing the monster class with the group of sprites it belongs to
         super().__init__(groups)
         self.sprite_type = "monster"
         self.z = LAYERS['player']
         self.status = 'up'
 
+        # monster animations
         self.import_graphic(monster_name)
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(topleft=pos)
@@ -18,6 +20,8 @@ class Monster(Entity):
         self.hitbox = self.rect.copy().inflate(0, -10)
         self.collision_sprites = collision_sprites
 
+        # monster properties
+        self.attack = attack_func
         self.monster_name = monster_name
         monster_info = MONSTER_DATA[self.monster_name]
         self.health = monster_info['health']
@@ -27,13 +31,12 @@ class Monster(Entity):
         self.attack_radius = monster_info['attack_radius']
         self.notice_radius = monster_info['notice_radius']
         self.loot_table = monster_info['loot_table']
-
-        self.move_flag = False
-        self.can_attack = True
         self.attack_time = 0
         self.attack_cooldown = 1000
 
-        self.attack = attack_func
+        # monster status
+        self.move_flag = False
+        self.can_attack = True
 
     def import_graphic(self, name):
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [
