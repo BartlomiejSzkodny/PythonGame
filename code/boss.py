@@ -6,18 +6,21 @@ from support import import_folder
 
 class Boss(Entity):
     def __init__(self, monster_name, pos, groups, collision_sprites, attack_func):
+        # initializing the monster class with the group of sprites it belongs to
         super().__init__(groups)
-        self.sprite_type = "monster"
-        self.z = LAYERS['player']
-        self.status = 'right'
 
+        # boss asset import
         self.import_graphic(monster_name)
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(topleft=pos)
+
+        # monster properties
+        self.sprite_type = "monster"
+        self.z = LAYERS['player']
+        self.status = 'right'
         self.pos = pygame.math.Vector2(self.rect.center)
         self.hitbox = self.rect.copy().inflate(-200, -200)
         self.collision_sprites = collision_sprites
-
         self.monster_name = monster_name
         monster_info = MONSTER_DATA[self.monster_name]
         self.health = monster_info['health']
@@ -27,14 +30,15 @@ class Boss(Entity):
         self.attack_radius = monster_info['attack_radius']
         self.notice_radius = monster_info['notice_radius']
         self.loot_table = monster_info['loot_table']
-
-        self.move_flag = False
-        self.can_attack = True
         self.attack_time = 0
         self.attack_cooldown = 1000
-
         self.attack = attack_func
 
+        # monster status
+        self.move_flag = False
+        self.can_attack = True
+
+    # importing the graphic of the boss
     def import_graphic(self, name):
         self.animations = {'left': [], 'right': [
         ], 'left_run': [], 'right_run': [], 'left_attack': [], 'right_attack': []}
@@ -42,6 +46,7 @@ class Boss(Entity):
             full_path = f"./assets/graphics/monsters/{name}/" + animation
             self.animations[animation] = import_folder(full_path)
 
+    # getting the distance between the player and the boss
     def get_player_distance(self, player):
         enemy_vec = pygame.math.Vector2(self.rect.center)
         player_vec = pygame.math.Vector2(player.rect.center)
@@ -53,6 +58,7 @@ class Boss(Entity):
             direction = pygame.math.Vector2(0, 0)
         return (distance, direction)
 
+    # getting the status of the boss
     def get_status(self, player):
         distance = self.get_player_distance(player)
         if (distance[0] < self.attack_radius) and self.can_attack:
@@ -71,6 +77,7 @@ class Boss(Entity):
             self.status = 'right'
             self.move_flag = False
 
+    # actions of the boss
     def actions(self, player):
         if 'attack' in self.status:
             self.attack_time = pygame.time.get_ticks()
@@ -79,6 +86,7 @@ class Boss(Entity):
         if not self.move_flag:
             self.direction = pygame.math.Vector2(0, 0)
 
+    # animating the boss
     def animate(self, dt):
         animation = self.animations[self.status]
         self.frame_index += self.animation_speed * dt
@@ -91,17 +99,20 @@ class Boss(Entity):
             self.frame_index = 0
         self.image = animation[int(self.frame_index)]
 
+    # attacking cooldown timer
     def attack_cooldown_timer(self):
         if not self.can_attack:
             current_time = pygame.time.get_ticks()
             if current_time - self.attack_time > self.attack_cooldown:
                 self.can_attack = True
 
+    # updating the boss
     def update(self, dt):
         self.move(dt)
         self.animate(dt)
         self.attack_cooldown_timer()
 
+    # updating the boss
     def enemy_update(self, player):
         self.get_status(player)
         self.actions(player)
