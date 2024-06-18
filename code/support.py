@@ -2,8 +2,7 @@ from os import walk
 import pygame
 
 
-def import_folder(path):
-
+def import_folder(path):  # importing the files of the game
     surface_list = []
     for _, __, img_files in walk(path):
         for img in img_files:

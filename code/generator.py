@@ -3,13 +3,14 @@ import re
 
 
 def rekurencja(i, j, plane, reduced, pool, k):
-    if plane[i][j] != 0:
+    if plane[i][j] != 0:  # if the room is already filled, return
         return
-    # printPlane(plane)
-    # print()
+
     if k < 0:
         return
     k -= 1
+
+    # seting up lists, that will determine what rooms can be placed in the current place
     reduced = []
     mussnt = []
     muss = []
@@ -38,17 +39,15 @@ def rekurencja(i, j, plane, reduced, pool, k):
         muss.append('D')
     elif (plane[i+1][j] == 0):
         can.append('D')
-    # print("mussnt:", mussnt)
-    # print("muss", muss)
-    # print("can", can)
 
+    # reducing the list of rooms that can be placed in the current place
     reduced = [s for s in pool if not any(m in s for m in mussnt)]
     reduced = [s for s in reduced if all(m in s for m in muss)]
 
     if len(reduced) == 0:
         reduced = can
 
-    # print("reduced", reduced)
+    # placing the room in the current place
     plane[i][j] = random.choice(reduced)
     for c2 in plane[i][j]:
         if c2 == 'U':
@@ -60,12 +59,15 @@ def rekurencja(i, j, plane, reduced, pool, k):
         if c2 == 'D':
             rekurencja(i+1, j, plane, reduced, pool, k)
 
+# function that generates the level
+
 
 def LevelGenerationComplete():
     numberOfRooms = 0
     SpawnRommFind = False
     BossRoomFind = False
     ShopRoomFind = False
+    # generating the level until all the conditions are met
     while ((ShopRoomFind == False) or (BossRoomFind == False) or (SpawnRommFind == False) or (10 < numberOfRooms > 15)):
         plane = [[0 for i in range(5)] for j in range(5)]
         levelGenerator(plane)
@@ -74,6 +76,8 @@ def LevelGenerationComplete():
             plane)
 
     return plane, spawn_i, spawn_j
+
+# function that generates the level recursively
 
 
 def levelGenerator(plane):
@@ -86,6 +90,7 @@ def levelGenerator(plane):
     return plane
 
 
+# function that cleans the level from the romms that lead to nowhere
 def cleaner(plane):
     numberOfRooms = 0
     for i in range(5):
@@ -103,6 +108,7 @@ def cleaner(plane):
     return numberOfRooms
 
 
+# function that flags the rooms(adds shop, spawn and boss rooms)
 def FlagRooms(plane):
     SpawnRommFind = False
     BossRoomFind = False

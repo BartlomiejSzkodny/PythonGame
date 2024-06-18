@@ -6,7 +6,8 @@ from settings import LAYERS, TILE_SIZE
 
 
 class Trap(Entity):
-    def __init__(self, trap_name, pos, groups):
+
+    def __init__(self, trap_name, pos, groups):  # initializing the trap
         super().__init__(groups)
         self.import_graphic(trap_name)
         self.status = 'idle'
@@ -14,18 +15,18 @@ class Trap(Entity):
         self.z = LAYERS['walls']
         self.rect = self.image.get_rect(topleft=pos).inflate(0, 5)
 
-    def import_graphic(self, name):
+    def import_graphic(self, name):  # importing the graphic of the trap
         self.animations = {'idle': []}
         for animation in self.animations.keys():
             full_path = f"./assets/graphics/traps/{name}/" + animation
             self.animations[animation] = import_folder(full_path)
 
-    def animate(self, dt):
+    def animate(self, dt):  # animating the trap
         animation = self.animations[self.status]
         self.frame_index += self.animation_speed * dt
         if self.frame_index >= len(animation):
             self.frame_index = 0
         self.image = animation[int(self.frame_index)]
 
-    def update(self, dt):
+    def update(self, dt):  # updating the trap
         self.animate(dt)

@@ -211,7 +211,7 @@ class Level:
     def player_damaged(self, damage):
         self.player.health -= damage
 
-    def DoorCloser(self):
+    def DoorCloser(self):  # this is the function for closing the doors
 
         if self.CloseDoors:
             if (re.search("U", self.plain[self.current_room[0]][self.current_room[1]])):
@@ -224,7 +224,6 @@ class Level:
                         LAYERS['walls'])
 
             if (re.search("D", self.plain[self.current_room[0]][self.current_room[1]])):
-                # print("door down closing")
                 for x, y, surf in self.tmx_data.get_layer_by_name("doors").tiles():
                     Generic(
                         ((45 % ROOM_WIDTH)*TILE_SIZE+(self.player.rect.centerx//(13*64))*ROOM_WIDTH*TILE_SIZE,
@@ -234,7 +233,6 @@ class Level:
                         LAYERS['walls'])
 
             if (re.search("L", self.plain[self.current_room[0]][self.current_room[1]])):
-                # print("door left closing")
                 for x, y, surf in self.tmx_data.get_layer_by_name("doors").tiles():
                     Generic(
                         ((39 % ROOM_WIDTH)*TILE_SIZE+(self.player.rect.centerx//(13*64))*ROOM_WIDTH*TILE_SIZE,
@@ -244,7 +242,6 @@ class Level:
                         LAYERS['walls'])
 
             if (re.search("R", self.plain[self.current_room[0]][self.current_room[1]])):
-                # print("door right closing")
                 for x, y, surf in self.tmx_data.get_layer_by_name("doors").tiles():
                     Generic(
                         ((51 % ROOM_WIDTH)*TILE_SIZE+(self.player.rect.centerx//(13*64))*ROOM_WIDTH*TILE_SIZE,
@@ -254,15 +251,14 @@ class Level:
                         LAYERS['walls'])
 
             self.CloseDoors = False
-            # print(self.list_of_enemies)
 
-    def DoorOpener(self):
+    def DoorOpener(self):  # this is the function for opening the doors
         if self.list_of_enemies == [] and self.CloseDoors == False:
             for sprite in self.doors:
                 sprite.kill()
             self.OpenDoors = False
 
-    def IfPlayerDied(self):
+    def IfPlayerDied(self):  # this is the function for checking if the player died
         if self.player.health <= 0:
             return True
 
@@ -273,15 +269,14 @@ class Level:
         self.check_if_in_new_room(self.player)
 
         self.allsprites.update(dt)  # update the sprites
-        # display the overlay, this is where the player's health will be displayed, etc
-        self.allsprites.enemy_updatei(self.player)
-        self.player_attack_logic()
-        self.traps_logic()
-        self.overlay.display(self.player)
-        self.encounter_spawner()
-        self.BossSpawner()
-        self.DoorCloser()
-        self.DoorOpener()
+        self.allsprites.enemy_updatei(self.player)  # update the enemies
+        self.player_attack_logic()  # player attack logic
+        self.traps_logic()  # traps logic
+        self.overlay.display(self.player)  # display the overlay
+        self.encounter_spawner()  # spawn the enemies
+        self.BossSpawner()  # spawn the boss
+        self.DoorCloser()  # close the doors
+        self.DoorOpener()  # open the doors
 
 
 class cameraGroup(pygame.sprite.Group):  # seting up the camera group
@@ -291,7 +286,6 @@ class cameraGroup(pygame.sprite.Group):  # seting up the camera group
         self.offset = pygame.math.Vector2()  # seting up the offset
 
     def custom_draw(self, player):  # how the camera will be displayed
-        # print(player.rect.centerx//(13*64), player.rect.centery//(9*64))
 
         self.offset.x = player.rect.centerx//(13*64) * \
             13*64 - WIDTH_screen+64*12.5
@@ -328,7 +322,7 @@ class cameraGroup(pygame.sprite.Group):  # seting up the camera group
     def enemy_updatei(self, player):
         enemy_sprites = [sprite for sprite in self.sprites()]
         for i in enemy_sprites:
-            # check if is generic
+            # if the sprite is a monster, then update the sprite
             if i.__class__.__name__ == "Monster":
                 i.enemy_update(player)
             if i.__class__.__name__ == "Boss":

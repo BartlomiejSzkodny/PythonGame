@@ -3,7 +3,7 @@ import pygame
 from settings import *
 
 
-class Generic(pygame.sprite.Sprite):
+class Generic(pygame.sprite.Sprite):  # generic class for all sprites
     def __init__(self, pos, surf, groups, z=LAYERS['background']):
         super().__init__(groups)
         self.image = surf
@@ -12,7 +12,7 @@ class Generic(pygame.sprite.Sprite):
         self.hitbox = self.rect.copy().move(0, -30).inflate(-16, -16)
 
 
-class Weapon(pygame.sprite.Sprite):
+class Weapon(pygame.sprite.Sprite):  # weapon class for displaying the weapon
     def __init__(self, player, groups):
         super().__init__(groups)
         self.image = pygame.Surface((32, 32))

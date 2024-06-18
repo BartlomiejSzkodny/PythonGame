@@ -1,5 +1,7 @@
 import pygame
 
+# Entity class, parent class for all entities
+
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, groups):
@@ -10,6 +12,7 @@ class Entity(pygame.sprite.Sprite):
         self.damage = 0
         self.direction = pygame.math.Vector2()
 
+    # checking for collision
     def collision(self, direction):
         for sprite in self.collision_sprites.sprites():
             if sprite.hitbox.colliderect(self.hitbox):
@@ -28,6 +31,7 @@ class Entity(pygame.sprite.Sprite):
                     self.rect.centery = self.hitbox.centery
                     self.pos.y = self.rect.centery
 
+    # moving the entity
     def move(self, dt):
         if self.direction.length() > 0:
             self.direction.normalize_ip()
@@ -42,6 +46,7 @@ class Entity(pygame.sprite.Sprite):
         self.rect.centery = self.hitbox.centery
         self.collision('vertical')
 
+    # Updating the entity
     def update(self, dt):
         self.image = self.animations[self.status][self.frame_index]
         self.move(dt)
