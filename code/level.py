@@ -97,7 +97,7 @@ class Level:
 
         self.player = Player(
             # spawn the player
-                            ((spawn_j)*13*64-(64*7), (spawn_i)*9*64-(64*5)), self.allsprites, self.collision_sprites, self.create_attack, self.destroy_attack)
+                            ((spawn_j)*13*64-(64*7), (spawn_i)*9*64-(64*5)), self.allsprites, self.collision_sprites, self.create_attack, self.destroy_attack, self.dragon_blood_potion)
 
     # check if the player is in a new room, this is used to spawn the enemies, traps and move camera
     def check_if_in_new_room(self, player):
@@ -130,6 +130,11 @@ class Level:
         if self.current_attack:
             self.current_attack.kill()
         self.current_attack = None
+
+    def dragon_blood_potion(self):
+        for i in self.attackable_sprites:
+            i.kill()
+            self.list_of_enemies = []
 
     # this is the function for the player attack logic, like specyfic attack for specyfic enemy
     def player_attack_logic(self):

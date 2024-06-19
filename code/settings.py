@@ -31,5 +31,6 @@ MONSTER_DATA = {
 INVENTORY_DATA = {
     'damage_potion': {'type': 'potion', 'value': 2, "amount": 0, "effect": "damage_up"},
     'health_potion': {'type': 'potion', 'value': 50, "amount": 0},
-    'speed_potion': {'type': 'potion', 'value': 100, "amount": 0, "effect": "speed_up"}
+    'speed_potion': {'type': 'potion', 'value': 100, "amount": 0, "effect": "speed_up"},
+    'dragons_blood': {'type': 'potion', 'value': 100, "amount": 1, "effect": "area_dmg"}
 }

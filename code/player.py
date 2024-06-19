@@ -6,7 +6,7 @@ from entity import Entity
 
 
 class Player(Entity):  # player class
-    def __init__(self, pos, group, collision_sprites, create_attack, destroy_attack):
+    def __init__(self, pos, group, collision_sprites, create_attack, destroy_attack, dragon_blood_potion):
         # initializing the player class with the group of sprites it belongs to
         super().__init__(group)
 
@@ -21,6 +21,7 @@ class Player(Entity):  # player class
         self.speed = 300
         self.create_attack = create_attack
         self.destroy_attack = destroy_attack
+        self.dragonblood = dragon_blood_potion
         self.isattack = False
 
         # collision
@@ -151,6 +152,8 @@ class Player(Entity):  # player class
             if self.effects == 'speed_up':
                 self.speed = 300 + \
                     INVENTORY_DATA[self.selected_potion]['value']
+            if self.effects == 'area_dmg':
+                self.dragonblood()
 
     # updating the timers
     def update_timers(self):
