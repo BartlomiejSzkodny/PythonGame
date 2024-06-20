@@ -11,13 +11,14 @@ class Boss(Entity):
 
         # boss asset import
         self.import_graphic(monster_name)
+        self.status = 'right'
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(topleft=pos)
 
         # monster properties
         self.sprite_type = "monster"
         self.z = LAYERS['player']
-        self.status = 'right'
+
         self.pos = pygame.math.Vector2(self.rect.center)
         self.hitbox = self.rect.copy().inflate(-200, -200)
         self.collision_sprites = collision_sprites

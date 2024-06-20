@@ -24,13 +24,13 @@ WEAPON_DATA = {
 MONSTER_DATA = {
     "Imp": {'health': 100, 'gold': 10, 'speed': 100, 'damage': 10, 'attack_radius': 30, 'notice_radius': 300, 'loot_table': {'damage_potion': 1, 'speed_potion': 1, 'health_potion': 1, 'money': 10}
             },
-    "Minotaur": {'health': 500, 'gold': 20, 'speed': 160, 'damage': 0.2, 'attack_radius': 40, 'notice_radius': 400, 'loot_table': {'damage_potion': 2, 'health_potion': 2, 'money': 20}}
+    "Minotaur": {'health': 500, 'gold': 20, 'speed': 160, 'damage': 0.2, 'attack_radius': 40, 'notice_radius': 400, 'loot_table': {'damage_potion': 2, 'health_potion': 2, 'money': 20, 'dragons_blood': 1}}
 }
 
 
 INVENTORY_DATA = {
     'damage_potion': {'type': 'potion', 'value': 2, "amount": 0, "effect": "damage_up"},
     'health_potion': {'type': 'potion', 'value': 50, "amount": 0},
-    'speed_potion': {'type': 'potion', 'value': 100, "amount": 0, "effect": "speed_up"},
+    'speed_potion': {'type': 'potion', 'value': 100, "amount": 1, "effect": "speed_up"},
     'dragons_blood': {'type': 'potion', 'value': 100, "amount": 1, "effect": "area_dmg"}
 }

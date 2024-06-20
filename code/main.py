@@ -21,7 +21,6 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            # setting up the clock, this is the time that the game will run
             dt = self.clock.tick()/1000
             self.level.run(dt)  # running the level
             if self.level.IfPlayerDied():

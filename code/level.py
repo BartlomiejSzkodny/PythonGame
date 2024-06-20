@@ -64,7 +64,6 @@ class Level:
             self.plain = [[0 for i in range(5)] for j in range(5)]
             self.plain, spawn_i, spawn_j = future_level_gen.result()
 
-        # print(self.plain) how the rooms are connected
         for i in self.plain:
             print("\t".join(map(str, i)))
         for i, _ in enumerate(self.plain):
@@ -106,15 +105,12 @@ class Level:
         self.current_room = new_x_y
 
         if (16 < player.rect.centery % (9*64) < 64*6.8 and 48 < player.rect.centerx % (13*64) < 64*11):
-            # print("Now in room: ", self.plain[new_x_y[0]][new_x_y[1]])
             if (([new_x_y[0], new_x_y[1], self.plain[new_x_y[0]][new_x_y[1]]]) in self.visited_rooms):
-                # print("Already visited")
                 pass
             else:
 
                 self.visited_rooms.append([  # list of visited rooms for minimap
                     new_x_y[0], new_x_y[1], self.plain[new_x_y[0]][new_x_y[1]]])
-                # print("Visited rooms: ", self.visited_rooms)
                 if ((not re.search("-S", self.plain[new_x_y[0]][new_x_y[1]])) and (not re.search("-I", self.plain[new_x_y[0]][new_x_y[1]])) and (not re.search("-B", self.plain[new_x_y[0]][new_x_y[1]]))):
                     self.encounter = True  # this will spawn the enemies
                 elif (re.search("-B", self.plain[new_x_y[0]][new_x_y[1]])):
@@ -259,7 +255,6 @@ class Level:
             self.CloseDoors = False
 
     def DoorOpener(self):  # this is the function for opening the doors
-        print(self.list_of_enemies)
         if self.list_of_enemies == [] and self.CloseDoors == False:
             for sprite in self.doors:
                 sprite.kill()

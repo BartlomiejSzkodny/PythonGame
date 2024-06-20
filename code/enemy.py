@@ -94,7 +94,6 @@ class Monster(Entity):
         if self.frame_index >= len(animation):
             if 'attack' in self.status:
                 self.can_attack = False
-                print("attacked")
                 self.attack(self.damage)
             self.frame_index = 0
         self.image = animation[int(self.frame_index)]

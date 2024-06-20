@@ -19,7 +19,6 @@ class Weapon(pygame.sprite.Sprite):  # weapon class for displaying the weapon
         self.rect = self.image.get_rect(center=player.rect.center)
         self.z = LAYERS['weapon']
         direction = player.status.split('_')[0]
-        print(direction)
 
         full_path = f"./assets/graphics/Player/weapons/{
             player.selected_weapon}/{direction}.png"
